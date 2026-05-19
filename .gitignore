@@ -1,0 +1,81 @@
+# .gitignore for YOGA-ZEN Project
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+*.c9/
+*.swp
+*.swo
+*~
+.vim
+
+# Node Modules (if using node-based tools)
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Build & Dist
+build/
+dist/
+*.zip
+*.rar
+*.7z
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.log
+
+# OS-specific
+.AppleDouble
+.AppleDB
+
+# Audio & Image Working Files
+# (Keep only final MP3s and PNGs, not working files)
+*.wav
+*.flac
+*.aiff
+*.m4a
+*.psd
+*.ai
+*.xd
+*.sketch
+
+# Testing & Debugging
+.nyc_output/
+coverage/
+.mocha
+
+# Ruby/Bundle (if using)
+Gemfile.lock
+
+# Package management
+.yarn/
+.pnp
+
+# Keep only these assets
+# !assets/
+# !assets/audio/
+# !assets/images/
