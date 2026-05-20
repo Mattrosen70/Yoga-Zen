@@ -136,14 +136,14 @@
             opacity: 0.9;
         }
 
-        .pose-section {
+        .water-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
 
-        .pose-container {
+        .water-image-container {
             flex: 1;
             display: flex;
             align-items: center;
@@ -153,41 +153,29 @@
             background: linear-gradient(135deg, rgba(93, 217, 217, 0.08) 0%, rgba(168, 213, 186, 0.05) 100%);
             border-radius: 12px;
             overflow: hidden;
-            font-size: 120px;
-            line-height: 1;
             position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .pose-container::before {
+        .water-image-container::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(93, 217, 217, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(168, 213, 186, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .pose-image {
-            animation: float 4s ease-in-out infinite;
-            position: relative;
+            background: linear-gradient(135deg, rgba(26, 77, 61, 0.3) 0%, rgba(15, 61, 53, 0.2) 100%);
             z-index: 1;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .pose-info {
+        .water-info {
             text-align: center;
             width: 100%;
         }
 
-        .pose-name {
+        .water-name {
             color: var(--stone-light);
             font-size: clamp(16px, 3vw, 20px);
             font-weight: 500;
@@ -204,7 +192,7 @@
             text-transform: uppercase;
         }
 
-        .pose-navigation {
+        .water-navigation {
             display: flex;
             gap: 15px;
             justify-content: center;
@@ -456,9 +444,8 @@
                 padding: 15px;
             }
 
-            .pose-container {
+            .water-image-container {
                 min-height: 200px;
-                font-size: 80px;
             }
 
             .button-group {
@@ -478,11 +465,11 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .pose-navigation {
+            .water-navigation {
                 gap: 10px;
             }
 
-            .pose-navigation button {
+            .water-navigation button {
                 flex: 1;
             }
         }
@@ -530,24 +517,22 @@
         <div class="app-wrapper">
             <div class="header">
                 <div class="title">🧘 YOGA-ZEN <span class="status-indicator hidden" id="statusIndicator"></span></div>
-                <div class="subtitle">Meditation Flow</div>
+                <div class="subtitle">Water Relaxation</div>
             </div>
 
             <div class="content">
                 <div class="main-section">
                     <div class="panel">
-                        <div class="panel-title">Current Pose</div>
-                        <div class="pose-section">
-                            <div class="pose-container">
-                                <div id="poseImage" class="pose-image">🧘</div>
-                            </div>
-                            <div class="pose-info">
-                                <div class="pose-name" id="poseName">Mountain Pose</div>
+                        <div class="panel-title">Relaxation Scenes</div>
+                        <div class="water-section">
+                            <div class="water-image-container" id="waterImage"></div>
+                            <div class="water-info">
+                                <div class="water-name" id="waterName">Running Stream</div>
                                 <div class="track-name" id="trackName">Zen Meditation Breeze</div>
                             </div>
-                            <div class="pose-navigation">
-                                <button class="nav-btn" id="prevPoseBtn" onclick="app.prevPose()">⬅ Previous</button>
-                                <button class="nav-btn" id="nextPoseBtn" onclick="app.nextPose()">Next ➜</button>
+                            <div class="water-navigation">
+                                <button class="nav-btn" id="prevWaterBtn" onclick="app.prevWater()">⬅ Previous</button>
+                                <button class="nav-btn" id="nextWaterBtn" onclick="app.nextWater()">Next ➜</button>
                             </div>
                         </div>
                     </div>
@@ -566,8 +551,8 @@
                                 <div class="stat-value" id="tracksPlayed">0</div>
                             </div>
                             <div class="stat-box">
-                                <div class="stat-label">Poses Shown</div>
-                                <div class="stat-value" id="posesShown">0</div>
+                                <div class="stat-label">Scenes Viewed</div>
+                                <div class="stat-value" id="scenesViewed">0</div>
                             </div>
                             <div class="stat-box">
                                 <div class="stat-label">Relax Level</div>
@@ -607,10 +592,10 @@
             constructor() {
                 this.isPlaying = false;
                 this.currentTrackIndex = 0;
-                this.currentPoseIndex = 0;
+                this.currentWaterIndex = 0;
                 this.sessionTime = 0;
                 this.tracksPlayed = 0;
-                this.posesShown = 1;
+                this.scenesViewed = 1;
                 this.relaxLevel = 80;
                 this.volume = 0.6;
 
@@ -624,22 +609,46 @@
                     { name: 'Himalayan Peace', freq: 200 }
                 ];
 
-                // Embedded yoga poses with emoji
-                this.poses = [
-                    { name: 'Mountain Pose', emoji: '🧘' },
-                    { name: 'Child Pose', emoji: '🙏' },
-                    { name: 'Tree Pose', emoji: '🌳' },
-                    { name: 'Downward Dog', emoji: '🐕' },
-                    { name: 'Warrior Pose', emoji: '⚔️' },
-                    { name: 'Lotus Position', emoji: '🪷' },
-                    { name: 'Cat-Cow Stretch', emoji: '🐱' },
-                    { name: 'Savasana', emoji: '😴' }
+                // Water relaxation scenes with real image URLs
+                this.waterScenes = [
+                    { 
+                        name: 'Running Stream', 
+                        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&blend=https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80&blend-mode=overlay' 
+                    },
+                    { 
+                        name: 'Peaceful Lake', 
+                        image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80' 
+                    },
+                    { 
+                        name: 'Waterfall Cascade', 
+                        image: 'https://images.unsplash.com/photo-1432405972618-c60b0b51e1f1?w=800&q=80' 
+                    },
+                    { 
+                        name: 'Mountain Stream', 
+                        image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80' 
+                    },
+                    { 
+                        name: 'Fishing at Sunset', 
+                        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' 
+                    },
+                    { 
+                        name: 'River Flow', 
+                        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' 
+                    },
+                    { 
+                        name: 'Crystal Lake Reflection', 
+                        image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80' 
+                    },
+                    { 
+                        name: 'Misty Morning Waters', 
+                        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' 
+                    }
                 ];
 
                 this.audioContext = null;
                 this.oscillators = [];
                 this.initializeAudio();
-                this.updatePose();
+                this.updateWaterScene();
                 this.setupEventListeners();
                 this.registerServiceWorker();
             }
@@ -679,7 +688,7 @@
 
                 this.sessionTimer = setInterval(() => this.updateSessionTime(), 1000);
                 this.trackRotationTimer = setInterval(() => this.nextTrack(), (120 + Math.random() * 60) * 1000);
-                this.poseRotationTimer = setInterval(() => this.nextPose(), 120000);
+                this.waterRotationTimer = setInterval(() => this.nextWater(), 120000);
                 this.relaxTimer = setInterval(() => this.increaseRelaxation(), 5000);
 
                 this.tracksPlayed++;
@@ -694,7 +703,7 @@
 
                 clearInterval(this.sessionTimer);
                 clearInterval(this.trackRotationTimer);
-                clearInterval(this.poseRotationTimer);
+                clearInterval(this.waterRotationTimer);
                 clearInterval(this.relaxTimer);
 
                 if (this.audioContext.state === 'running') {
@@ -706,12 +715,12 @@
                 this.pause();
                 this.sessionTime = 0;
                 this.relaxLevel = 80;
-                this.posesShown = 1;
+                this.scenesViewed = 1;
                 this.currentTrackIndex = 0;
-                this.currentPoseIndex = 0;
+                this.currentWaterIndex = 0;
                 document.getElementById('stopBtn').disabled = true;
                 this.updateUI();
-                this.updatePose();
+                this.updateWaterScene();
             }
 
             playMeditationSound() {
@@ -753,18 +762,18 @@
                 this.updateUI();
             }
 
-            nextPose() {
+            nextWater() {
                 if (!this.isPlaying) return;
-                this.currentPoseIndex = (this.currentPoseIndex + 1) % this.poses.length;
-                this.posesShown++;
-                this.updatePose();
+                this.currentWaterIndex = (this.currentWaterIndex + 1) % this.waterScenes.length;
+                this.scenesViewed++;
+                this.updateWaterScene();
                 this.playMeditationSound();
                 this.updateUI();
             }
 
-            prevPose() {
-                this.currentPoseIndex = (this.currentPoseIndex - 1 + this.poses.length) % this.poses.length;
-                this.updatePose();
+            prevWater() {
+                this.currentWaterIndex = (this.currentWaterIndex - 1 + this.waterScenes.length) % this.waterScenes.length;
+                this.updateWaterScene();
                 if (this.isPlaying) {
                     this.playMeditationSound();
                 }
@@ -784,10 +793,11 @@
                 }
             }
 
-            updatePose() {
-                const pose = this.poses[this.currentPoseIndex];
-                document.getElementById('poseImage').textContent = pose.emoji;
-                document.getElementById('poseName').textContent = pose.name;
+            updateWaterScene() {
+                const scene = this.waterScenes[this.currentWaterIndex];
+                const container = document.getElementById('waterImage');
+                container.style.backgroundImage = `url('${scene.image}')`;
+                document.getElementById('waterName').textContent = scene.name;
             }
 
             setVolume(value) {
@@ -803,7 +813,7 @@
                 document.getElementById('sessionTime').textContent = timeStr;
 
                 document.getElementById('tracksPlayed').textContent = this.tracksPlayed;
-                document.getElementById('posesShown').textContent = this.posesShown;
+                document.getElementById('scenesViewed').textContent = this.scenesViewed;
                 document.getElementById('relaxLevel').textContent = Math.round(this.relaxLevel) + '%';
                 document.getElementById('trackName').textContent = this.tracks[this.currentTrackIndex].name;
                 document.getElementById('relaxFill').style.width = this.relaxLevel + '%';
