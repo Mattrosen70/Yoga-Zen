@@ -10,6 +10,7 @@
     <title>🧘 YOGA-ZEN: 90s Edition</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300ffff'>🧘</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230a0e27' width='180' height='180'/><text x='90' y='130' font-size='100' text-anchor='middle' fill='%2300ffff'>🧘</text></svg>">
+    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --neon-cyan: #00ffff;
@@ -146,13 +147,11 @@
             background: rgba(0, 50, 80, 0.4);
             border-radius: 5px;
             overflow: hidden;
+            font-size: 100px;
+            line-height: 1;
         }
 
         .pose-image {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px var(--neon-cyan));
             animation: pulse 3s ease-in-out infinite;
         }
 
@@ -459,7 +458,7 @@
                     <div class="panel">
                         <div class="panel-title">Current Pose</div>
                         <div class="pose-container">
-                            <img id="poseImage" class="pose-image" src="" alt="Current Yoga Pose">
+                            <div id="poseImage" class="pose-image">🧘</div>
                         </div>
                         <div class="pose-name" id="poseName">Mountain Pose</div>
                     </div>
@@ -536,18 +535,19 @@
                 this.tracksPlayed = 0;
                 this.posesShown = 1;
                 this.relaxLevel = 80;
+                this.volume = 0.6;
 
-                // Embedded audio tracks (using Web Audio API generated tones)
+                // Embedded tracks (using Web Audio API)
                 this.tracks = [
-                    { name: 'Zen Meditation Breeze', id: 'track0' },
-                    { name: 'Tranquil Garden Vibes', id: 'track1' },
-                    { name: 'Morning Sunrise Calm', id: 'track2' },
-                    { name: 'Forest Whispers', id: 'track3' },
-                    { name: 'Ocean Waves Serenity', id: 'track4' },
-                    { name: 'Himalayan Peace', id: 'track5' }
+                    { name: 'Zen Meditation Breeze', freq: 100 },
+                    { name: 'Tranquil Garden Vibes', freq: 120 },
+                    { name: 'Morning Sunrise Calm', freq: 140 },
+                    { name: 'Forest Whispers', freq: 160 },
+                    { name: 'Ocean Waves Serenity', freq: 180 },
+                    { name: 'Himalayan Peace', freq: 200 }
                 ];
 
-                // Embedded yoga poses (emoji + text)
+                // Embedded yoga poses with emoji
                 this.poses = [
                     { name: 'Mountain Pose', emoji: '🧘' },
                     { name: 'Child Pose', emoji: '🙏' },
@@ -559,20 +559,25 @@
                     { name: 'Savasana', emoji: '😴' }
                 ];
 
-                this.audio = new Audio();
-                this.audio.volume = 0.6;
                 this.audioContext = null;
                 this.oscillators = [];
-
                 this.initializeAudio();
                 this.updatePose();
                 this.setupEventListeners();
+                this.registerServiceWorker();
             }
 
             initializeAudio() {
-                // Create audio context for Web Audio API fallback
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 this.audioContext = new AudioContext();
+            }
+
+            registerServiceWorker() {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('sw.js').catch(() => {
+                        // Service worker registration failed, app still works
+                    });
+                }
             }
 
             setupEventListeners() {
@@ -593,10 +598,8 @@
                 document.getElementById('stopBtn').disabled = false;
                 document.getElementById('statusIndicator').classList.remove('hidden');
 
-                // Generate ambient meditation sounds
                 this.playMeditationSound();
 
-                // Start timers
                 this.sessionTimer = setInterval(() => this.updateSessionTime(), 1000);
                 this.trackRotationTimer = setInterval(() => this.nextTrack(), (120 + Math.random() * 60) * 1000);
                 this.poseRotationTimer = setInterval(() => this.nextPose(), 120000);
@@ -639,12 +642,10 @@
                     this.audioContext.resume();
                 }
 
-                // Create a simple ambient meditation sound
                 const now = this.audioContext.currentTime;
                 const duration = 2;
-
-                // Base frequency that changes by track
-                const baseFreq = 100 + (this.currentTrackIndex * 20);
+                const track = this.tracks[this.currentTrackIndex];
+                const baseFreq = track.freq;
                 
                 const osc = this.audioContext.createOscillator();
                 const gain = this.audioContext.createGain();
@@ -654,8 +655,8 @@
                 osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.2, now + duration * 0.5);
                 osc.frequency.exponentialRampToValueAtTime(baseFreq, now + duration);
 
-                gain.gain.setValueAtTime(0.05, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+                gain.gain.setValueAtTime(0.05 * this.volume, now);
+                gain.gain.exponentialRampToValueAtTime(0.01 * this.volume, now + duration);
 
                 osc.connect(gain);
                 gain.connect(this.audioContext.destination);
@@ -663,9 +664,6 @@
                 osc.start(now);
                 osc.stop(now + duration);
 
-                this.oscillators.push({ osc, gain });
-
-                // Schedule next sound
                 if (this.isPlaying) {
                     setTimeout(() => this.playMeditationSound(), duration * 1000);
                 }
@@ -702,40 +700,29 @@
             updatePose() {
                 const pose = this.poses[this.currentPoseIndex];
                 document.getElementById('poseImage').textContent = pose.emoji;
-                document.getElementById('poseImage').style.fontSize = '100px';
-                document.getElementById('poseImage').style.lineHeight = '1';
-                document.getElementById('poseImage').style.textAlign = 'center';
                 document.getElementById('poseName').textContent = pose.name;
             }
 
             setVolume(value) {
-                const volume = value / 100;
-                this.audio.volume = volume;
+                this.volume = value / 100;
                 document.getElementById('volumeValue').textContent = value + '%';
             }
 
             updateUI() {
-                // Session time
                 const hours = Math.floor(this.sessionTime / 3600);
                 const minutes = Math.floor((this.sessionTime % 3600) / 60);
                 const seconds = this.sessionTime % 60;
                 const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
                 document.getElementById('sessionTime').textContent = timeStr;
 
-                // Stats
                 document.getElementById('tracksPlayed').textContent = this.tracksPlayed;
                 document.getElementById('posesShown').textContent = this.posesShown;
                 document.getElementById('relaxLevel').textContent = Math.round(this.relaxLevel) + '%';
-                
-                // Track info
                 document.getElementById('trackInfo').textContent = this.tracks[this.currentTrackIndex].name;
-
-                // Relax meter
                 document.getElementById('relaxFill').style.width = this.relaxLevel + '%';
             }
         }
 
-        // Initialize app when page loads
         let app;
         document.addEventListener('DOMContentLoaded', () => {
             app = new YogaZenApp();
