@@ -204,6 +204,14 @@
             text-transform: uppercase;
         }
 
+        .pose-navigation {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
         .bottom-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -297,6 +305,19 @@
             background: linear-gradient(135deg, rgba(168, 213, 186, 0.3) 0%, rgba(93, 217, 217, 0.25) 100%);
             border-color: rgba(168, 213, 186, 0.8);
             box-shadow: 0 8px 20px rgba(168, 213, 186, 0.2);
+        }
+
+        button.nav-btn {
+            border-color: rgba(212, 165, 116, 0.5);
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.15) 0%, rgba(93, 217, 217, 0.1) 100%);
+            color: var(--accent-warm);
+            min-width: 50px;
+        }
+
+        button.nav-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.25) 0%, rgba(168, 213, 186, 0.1) 100%);
+            border-color: rgba(212, 165, 116, 0.8);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.2);
         }
 
         button:disabled {
@@ -456,6 +477,14 @@
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .pose-navigation {
+                gap: 10px;
+            }
+
+            .pose-navigation button {
+                flex: 1;
+            }
         }
 
         .status-indicator {
@@ -515,6 +544,10 @@
                             <div class="pose-info">
                                 <div class="pose-name" id="poseName">Mountain Pose</div>
                                 <div class="track-name" id="trackName">Zen Meditation Breeze</div>
+                            </div>
+                            <div class="pose-navigation">
+                                <button class="nav-btn" id="prevPoseBtn" onclick="app.prevPose()">⬅ Previous</button>
+                                <button class="nav-btn" id="nextPoseBtn" onclick="app.nextPose()">Next ➜</button>
                             </div>
                         </div>
                     </div>
@@ -725,6 +758,16 @@
                 this.currentPoseIndex = (this.currentPoseIndex + 1) % this.poses.length;
                 this.posesShown++;
                 this.updatePose();
+                this.playMeditationSound();
+                this.updateUI();
+            }
+
+            prevPose() {
+                this.currentPoseIndex = (this.currentPoseIndex - 1 + this.poses.length) % this.poses.length;
+                this.updatePose();
+                if (this.isPlaying) {
+                    this.playMeditationSound();
+                }
                 this.updateUI();
             }
 
