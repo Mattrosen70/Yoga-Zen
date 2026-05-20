@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-title" content="Yoga-Zen">
     <title>🧘 YOGA-ZEN: 90s Edition</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300ffff'>🧘</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230a0e27' width='180' height='180'/><text x='90' y='130' font-size='100' text-anchor='middle' fill='%2300ffff'>🧘</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230a0e27' width='180' height='180'/><text x='90' y='130' font-size='130' fill='%2300ffff'>🧘</text></svg>">
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
@@ -655,8 +655,8 @@
                 osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.2, now + duration * 0.5);
                 osc.frequency.exponentialRampToValueAtTime(baseFreq, now + duration);
 
-                gain.gain.setValueAtTime(0.05 * this.volume, now);
-                gain.gain.exponentialRampToValueAtTime(0.01 * this.volume, now + duration);
+                gain.gain.setValueAtTime(0.3 * this.volume, now);
+                gain.gain.exponentialRampToValueAtTime(0.1 * this.volume, now + duration);
 
                 osc.connect(gain);
                 gain.connect(this.audioContext.destination);
