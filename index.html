@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#0a0e27">
+    <meta name="theme-color" content="#1a4d3d">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Yoga-Zen">
-    <title>🧘 YOGA-ZEN: 90s Edition</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300ffff'>🧘</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230a0e27' width='180' height='180'/><text x='90' y='130' font-size='130' fill='%2300ffff'>🧘</text></svg>">
+    <title>🧘 YOGA-ZEN: Meditation Flow</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%235dd9d9'>🧘</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%231a4d3d' width='180' height='180'/><text x='90' y='130' font-size='130' fill='%235dd9d9'>🧘</text></svg>">
     <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            --neon-cyan: #00ffff;
-            --neon-magenta: #ff00ff;
-            --neon-yellow: #ffff00;
-            --neon-green: #00ff00;
-            --neon-blue: #0099ff;
-            --dark-bg: #0a0e27;
-            --dark-secondary: #1a1f3a;
+            --water-light: #5dd9d9;
+            --water-dark: #2b7a7a;
+            --forest-dark: #1a4d3d;
+            --stone-light: #e8e8e8;
+            --stone-medium: #c4c4c4;
+            --stone-dark: #4a4a4a;
+            --accent-warm: #d4a574;
+            --accent-muted: #a8d5ba;
         }
 
         * {
@@ -31,9 +32,9 @@
         html, body {
             width: 100%;
             height: 100%;
-            font-family: 'Courier New', monospace;
-            background-color: var(--dark-bg);
-            color: var(--neon-cyan);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f3d35 0%, #1a4d3d 50%, #0f3d35 100%);
+            color: var(--stone-light);
             overflow: hidden;
             touch-action: manipulation;
             -webkit-user-select: none;
@@ -44,10 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.05) 25%, rgba(0, 255, 255, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.05) 75%, rgba(0, 255, 255, 0.05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
+            background-attachment: fixed;
         }
 
         .container {
@@ -63,79 +61,86 @@
 
         .app-wrapper {
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             height: 100%;
             max-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: rgba(26, 31, 58, 0.8);
-            border: 3px solid var(--neon-cyan);
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.1);
+            background: linear-gradient(180deg, rgba(26, 77, 61, 0.95) 0%, rgba(15, 61, 53, 0.95) 100%);
+            border: 2px solid rgba(93, 217, 217, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(93, 217, 217, 0.1);
             overflow: hidden;
             backdrop-filter: blur(10px);
         }
 
         .header {
             text-align: center;
-            padding: 15px 10px;
-            border-bottom: 2px solid var(--neon-cyan);
-            background: linear-gradient(180deg, rgba(0, 255, 255, 0.1) 0%, transparent 100%);
+            padding: 20px 15px;
+            border-bottom: 1px solid rgba(93, 217, 217, 0.2);
+            background: linear-gradient(180deg, rgba(93, 217, 217, 0.08) 0%, transparent 100%);
         }
 
         .title {
-            font-size: clamp(20px, 5vw, 40px);
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-magenta);
-            color: var(--neon-cyan);
-            letter-spacing: 2px;
-            animation: flicker 0.3s infinite alternate;
+            font-size: clamp(24px, 6vw, 44px);
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--water-light);
+            text-shadow: 0 2px 8px rgba(93, 217, 217, 0.2);
             margin-bottom: 5px;
-        }
-
-        @keyframes flicker {
-            0% { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-magenta); }
-            50% { text-shadow: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-cyan); }
-            100% { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-yellow); }
+            word-spacing: 8px;
         }
 
         .subtitle {
-            font-size: clamp(10px, 3vw, 14px);
-            color: var(--neon-magenta);
-            letter-spacing: 1px;
+            font-size: clamp(11px, 3vw, 13px);
+            color: var(--water-light);
+            letter-spacing: 2px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            font-weight: 300;
         }
 
         .content {
             flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
             padding: 20px;
             overflow-y: auto;
             scroll-behavior: smooth;
+            gap: 20px;
         }
 
-        .column {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .main-section {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .panel {
-            background: rgba(0, 30, 50, 0.6);
-            border: 2px solid var(--neon-cyan);
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), inset 0 0 10px rgba(0, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(43, 122, 122, 0.4) 0%, rgba(26, 77, 61, 0.6) 100%);
+            border: 1px solid rgba(93, 217, 217, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(93, 217, 217, 0.05);
+            backdrop-filter: blur(10px);
         }
 
         .panel-title {
-            color: var(--neon-magenta);
-            font-size: clamp(12px, 2.5vw, 16px);
-            margin-bottom: 10px;
+            color: var(--water-light);
+            font-size: clamp(13px, 2.5vw, 15px);
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px var(--neon-magenta);
+            letter-spacing: 2px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .pose-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
 
         .pose-container {
@@ -143,107 +148,106 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 250px;
-            background: rgba(0, 50, 80, 0.4);
-            border-radius: 5px;
+            min-height: 280px;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(93, 217, 217, 0.08) 0%, rgba(168, 213, 186, 0.05) 100%);
+            border-radius: 12px;
             overflow: hidden;
-            font-size: 100px;
+            font-size: 120px;
             line-height: 1;
+            position: relative;
+        }
+
+        .pose-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(93, 217, 217, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 213, 186, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .pose-image {
-            animation: pulse 3s ease-in-out infinite;
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pose-info {
+            text-align: center;
+            width: 100%;
         }
 
         .pose-name {
-            text-align: center;
-            color: var(--neon-yellow);
-            font-size: clamp(11px, 2vw, 14px);
-            margin-top: 10px;
-            text-shadow: 0 0 5px var(--neon-yellow);
+            color: var(--stone-light);
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: 500;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
-        .stats {
+        .track-name {
+            color: var(--water-light);
+            font-size: clamp(12px, 2vw, 14px);
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+            font-style: italic;
+            text-transform: uppercase;
+        }
+
+        .bottom-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .stat-box {
-            background: rgba(0, 30, 50, 0.8);
-            border: 1px solid var(--neon-cyan);
-            padding: 10px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(43, 122, 122, 0.3) 0%, rgba(26, 77, 61, 0.5) 100%);
+            border: 1px solid rgba(93, 217, 217, 0.2);
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            font-size: clamp(10px, 2vw, 12px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            background: linear-gradient(135deg, rgba(93, 217, 217, 0.15) 0%, rgba(168, 213, 186, 0.08) 100%);
+            border-color: rgba(93, 217, 217, 0.4);
         }
 
         .stat-label {
-            color: var(--neon-magenta);
-            font-size: clamp(9px, 1.5vw, 11px);
+            color: var(--water-light);
+            font-size: clamp(10px, 1.8vw, 11px);
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            font-weight: 500;
         }
 
         .stat-value {
-            color: var(--neon-yellow);
-            font-size: clamp(14px, 3vw, 18px);
-            font-weight: bold;
-            text-shadow: 0 0 5px var(--neon-yellow);
+            color: var(--accent-warm);
+            font-size: clamp(18px, 3.5vw, 24px);
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        .visualizer {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 4px;
-            height: 40px;
-            margin-top: 10px;
-        }
-
-        .bar {
-            width: 8px;
-            background: linear-gradient(to top, var(--neon-cyan), var(--neon-magenta));
-            border-radius: 2px;
-            box-shadow: 0 0 8px var(--neon-cyan);
-            animation: bounce 0.4s ease-in-out infinite;
-        }
-
-        .bar:nth-child(1) { animation-delay: 0s; }
-        .bar:nth-child(2) { animation-delay: 0.1s; }
-        .bar:nth-child(3) { animation-delay: 0.2s; }
-        .bar:nth-child(4) { animation-delay: 0.3s; }
-        .bar:nth-child(5) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 100% { height: 8px; }
-            50% { height: 35px; }
-        }
-
-        .track-info {
-            background: rgba(0, 30, 50, 0.8);
-            border: 1px solid var(--neon-cyan);
-            padding: 10px;
-            border-radius: 5px;
-            color: var(--neon-yellow);
-            font-size: clamp(11px, 2vw, 13px);
-            text-align: center;
-            text-shadow: 0 0 5px var(--neon-yellow);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .controls-section {
+        .controls-group {
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -257,70 +261,73 @@
         }
 
         button {
-            padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 25px);
+            padding: clamp(10px, 2vw, 13px) clamp(18px, 4vw, 28px);
             font-size: clamp(12px, 2.5vw, 14px);
-            font-family: 'Courier New', monospace;
-            border: 2px solid var(--neon-cyan);
-            background: rgba(0, 255, 255, 0.1);
-            color: var(--neon-cyan);
+            font-family: 'Segoe UI', sans-serif;
+            border: 1px solid rgba(93, 217, 217, 0.4);
+            background: linear-gradient(135deg, rgba(93, 217, 217, 0.15) 0%, rgba(43, 122, 122, 0.2) 100%);
+            color: var(--water-light);
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.2s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-            font-weight: bold;
+            transition: all 0.3s ease;
+            font-weight: 500;
             touch-action: manipulation;
         }
 
         button:hover {
-            background: rgba(0, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(93, 217, 217, 0.25) 0%, rgba(168, 213, 186, 0.15) 100%);
+            border-color: rgba(93, 217, 217, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(93, 217, 217, 0.2);
         }
 
         button:active {
-            transform: scale(0.95);
+            transform: translateY(0px);
         }
 
         button.play-btn {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            border-color: rgba(168, 213, 186, 0.6);
+            background: linear-gradient(135deg, rgba(168, 213, 186, 0.2) 0%, rgba(93, 217, 217, 0.15) 100%);
+            color: var(--accent-muted);
         }
 
         button.play-btn:hover {
-            background: rgba(0, 255, 0, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+            background: linear-gradient(135deg, rgba(168, 213, 186, 0.3) 0%, rgba(93, 217, 217, 0.25) 100%);
+            border-color: rgba(168, 213, 186, 0.8);
+            box-shadow: 0 8px 20px rgba(168, 213, 186, 0.2);
         }
 
         button:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
         }
 
         .slider-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: rgba(0, 30, 50, 0.8);
-            padding: 12px;
-            border: 1px solid var(--neon-cyan);
-            border-radius: 5px;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(43, 122, 122, 0.3) 0%, rgba(26, 77, 61, 0.5) 100%);
+            padding: 14px;
+            border: 1px solid rgba(93, 217, 217, 0.2);
+            border-radius: 10px;
         }
 
         .slider-label {
-            color: var(--neon-magenta);
-            font-size: clamp(10px, 2vw, 12px);
+            color: var(--water-light);
+            font-size: clamp(11px, 2vw, 12px);
             text-transform: uppercase;
-            min-width: 50px;
+            min-width: 55px;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
 
         input[type="range"] {
             flex: 1;
-            height: 6px;
+            height: 5px;
             border-radius: 3px;
-            background: linear-gradient(to right, var(--neon-cyan), var(--neon-magenta));
+            background: linear-gradient(to right, rgba(93, 217, 217, 0.3), rgba(168, 213, 186, 0.3));
             outline: none;
             -webkit-appearance: none;
             appearance: none;
@@ -330,108 +337,135 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: var(--neon-cyan);
+            background: var(--water-light);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--neon-cyan);
-            border: 2px solid var(--neon-magenta);
+            box-shadow: 0 0 8px rgba(93, 217, 217, 0.5);
+            border: 2px solid rgba(26, 77, 61, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(93, 217, 217, 0.7);
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: var(--neon-cyan);
+            background: var(--water-light);
             cursor: pointer;
-            box-shadow: 0 0 10px var(--neon-cyan);
-            border: 2px solid var(--neon-magenta);
+            box-shadow: 0 0 8px rgba(93, 217, 217, 0.5);
+            border: 2px solid rgba(26, 77, 61, 0.8);
+            transition: all 0.2s ease;
         }
 
         .volume-value {
-            color: var(--neon-yellow);
-            font-size: clamp(11px, 2vw, 13px);
+            color: var(--accent-warm);
+            font-size: clamp(11px, 2vw, 12px);
             min-width: 40px;
             text-align: right;
+            font-weight: 500;
         }
 
         .relax-meter {
-            background: rgba(0, 30, 50, 0.8);
-            border: 1px solid var(--neon-cyan);
-            padding: 10px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, rgba(43, 122, 122, 0.3) 0%, rgba(26, 77, 61, 0.5) 100%);
+            border: 1px solid rgba(93, 217, 217, 0.2);
+            padding: 14px;
+            border-radius: 10px;
         }
 
         .relax-label {
-            color: var(--neon-magenta);
-            font-size: clamp(10px, 2vw, 12px);
+            color: var(--water-light);
+            font-size: clamp(11px, 2vw, 12px);
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
 
         .relax-bar {
             width: 100%;
-            height: 20px;
-            background: rgba(0, 30, 80, 0.6);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 3px;
+            height: 18px;
+            background: rgba(26, 77, 61, 0.6);
+            border: 1px solid rgba(93, 217, 217, 0.2);
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
 
         .relax-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-green), var(--neon-yellow));
+            background: linear-gradient(90deg, var(--water-light), var(--accent-muted), var(--accent-warm));
             width: 80%;
-            border-radius: 3px;
-            box-shadow: 0 0 10px var(--neon-cyan);
-            transition: width 0.3s ease;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(93, 217, 217, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            transition: width 0.4s ease;
         }
 
         @media (max-width: 1024px) {
             .content {
-                grid-template-columns: 1fr;
                 padding: 15px;
+                gap: 15px;
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
             }
 
             .app-wrapper {
-                border-radius: 5px;
+                border-radius: 15px;
             }
         }
 
         @media (max-width: 600px) {
             .title {
-                font-size: 20px;
+                font-size: 22px;
             }
 
             .content {
-                padding: 10px;
-                gap: 10px;
+                padding: 12px;
+                gap: 12px;
             }
 
             .panel {
-                padding: 10px;
+                padding: 15px;
+            }
+
+            .pose-container {
+                min-height: 200px;
+                font-size: 80px;
             }
 
             .button-group {
-                gap: 5px;
+                gap: 8px;
+                flex-direction: column;
             }
 
             button {
-                padding: 8px 12px;
-                font-size: 12px;
+                width: 100%;
+            }
+
+            .bottom-section {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         .status-indicator {
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: var(--neon-yellow);
-            box-shadow: 0 0 8px var(--neon-yellow);
-            animation: blink 1s infinite;
+            background: var(--accent-muted);
+            box-shadow: 0 0 8px var(--accent-muted);
+            animation: pulse-indicator 1.5s ease-in-out infinite;
             margin-left: 8px;
         }
 
@@ -439,9 +473,26 @@
             display: none;
         }
 
-        @keyframes blink {
-            0%, 49%, 100% { opacity: 1; }
-            50%, 99% { opacity: 0.3; }
+        @keyframes pulse-indicator {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(93, 217, 217, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(93, 217, 217, 0.2);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(93, 217, 217, 0.4);
         }
     </style>
 </head>
@@ -450,22 +501,29 @@
         <div class="app-wrapper">
             <div class="header">
                 <div class="title">🧘 YOGA-ZEN <span class="status-indicator hidden" id="statusIndicator"></span></div>
-                <div class="subtitle">90s Edition • Zen Meditation</div>
+                <div class="subtitle">Meditation Flow</div>
             </div>
 
             <div class="content">
-                <div class="column">
+                <div class="main-section">
                     <div class="panel">
                         <div class="panel-title">Current Pose</div>
-                        <div class="pose-container">
-                            <div id="poseImage" class="pose-image">🧘</div>
+                        <div class="pose-section">
+                            <div class="pose-container">
+                                <div id="poseImage" class="pose-image">🧘</div>
+                            </div>
+                            <div class="pose-info">
+                                <div class="pose-name" id="poseName">Mountain Pose</div>
+                                <div class="track-name" id="trackName">Zen Meditation Breeze</div>
+                            </div>
                         </div>
-                        <div class="pose-name" id="poseName">Mountain Pose</div>
                     </div>
+                </div>
 
+                <div class="bottom-section">
                     <div class="panel">
-                        <div class="panel-title">Session Stats</div>
-                        <div class="stats">
+                        <div class="panel-title">Session Progress</div>
+                        <div class="stats-grid">
                             <div class="stat-box">
                                 <div class="stat-label">Session Time</div>
                                 <div class="stat-value" id="sessionTime">00:00:00</div>
@@ -484,23 +542,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="column">
-                    <div class="panel">
-                        <div class="panel-title">Now Playing</div>
-                        <div class="track-info" id="trackInfo">Zen Meditation Breeze</div>
-                        <div class="visualizer">
-                            <div class="bar"></div>
-                            <div class="bar"></div>
-                            <div class="bar"></div>
-                            <div class="bar"></div>
-                            <div class="bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="panel controls-section">
-                        <div class="panel-title">Controls</div>
+                    <div class="panel controls-group">
+                        <div class="panel-title">Controls & Progress</div>
                         <div class="button-group">
                             <button class="play-btn" id="playBtn" onclick="app.play()">▶ Play</button>
                             <button id="pauseBtn" onclick="app.pause()" disabled>⏸ Pause</button>
@@ -718,7 +762,7 @@
                 document.getElementById('tracksPlayed').textContent = this.tracksPlayed;
                 document.getElementById('posesShown').textContent = this.posesShown;
                 document.getElementById('relaxLevel').textContent = Math.round(this.relaxLevel) + '%';
-                document.getElementById('trackInfo').textContent = this.tracks[this.currentTrackIndex].name;
+                document.getElementById('trackName').textContent = this.tracks[this.currentTrackIndex].name;
                 document.getElementById('relaxFill').style.width = this.relaxLevel + '%';
             }
         }
